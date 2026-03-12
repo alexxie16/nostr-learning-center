@@ -17,7 +17,7 @@ export function ShareButton({ level, levelName, onSuccess }: ShareButtonProps) {
   const [showModal, setShowModal] = useState(false);
   const [status, setStatus] = useState<"idle" | "success">("idle");
 
-  const defaultContent = `I completed Level ${level}: ${levelName} in Nostr Learn! 🔗 ${APP_URL}`;
+  const defaultContent = `I completed Level ${level}: ${levelName} in Nostr Learning Center! 🔗 ${APP_URL}`;
 
   const handleShareClick = () => {
     if (!pubkey) return;

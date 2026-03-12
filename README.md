@@ -1,13 +1,18 @@
-# Nostr Learn
+# Nostr Learning Center
 
-A simple web game for learning the Nostr protocol. Play through 5 levels (Keys, Events, Relays, NIPs, Advanced), complete hands-on tasks and quizzes, then share your progress on Nostr.
+An interactive web game for learning the Nostr protocol. Master the decentralized protocol through hands-on tasks and quizzes, then sign in with Nostr to save progress across devices and share achievements.
 
 ## Features
 
-- **5 Levels**: Keys, Events, Relays, NIPs, Advanced Nostr
-- **Hybrid learning**: Hands-on tasks + quizzes
-- **Nostr sign-in**: NIP-07 browser extension (Alby, nos2x) or demo keys
-- **Share to Nostr**: Publish level completions as kind-1 notes
+- **11 levels** across 3 tracks:
+  - **Basics** (5): Keys, Events, Relays, NIPs, Kinds — hands-on tasks + quizzes
+  - **Advanced NIPs** (6): Core (01/02/17), Identity (05/19), Browser (07/46), Zaps (57/47/75), Relays (65/66/50), Social (51/52/53/58/72) — quizzes
+  - **Advanced Kinds** — coming soon
+- **Hybrid learning**: Hands-on tasks (Keys, Events, Relays, NIPs, Kinds) and quizzes with explanations
+- **Nostr sign-in**: NIP-07 browser extension (Alby, nos2x) or generate demo keys for try-it mode
+- **Progress sync**: When signed in with NIP-07, progress syncs to Nostr via NIP-78 (kind 30078)
+- **Share to Nostr**: Publish level completions as kind-1 notes with `#nostrlearn` and `#nostr` tags
+- **Developer mode**: Unlock all levels for testing (localStorage toggle)
 
 ## Run locally
 
@@ -30,3 +35,4 @@ npm start
 - Next.js 14 (App Router)
 - nostr-tools
 - Tailwind CSS
+- NIP-07 (extension sign-in), NIP-78 (app data / progress sync)

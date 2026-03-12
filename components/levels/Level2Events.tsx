@@ -35,7 +35,7 @@ export function Level2Events({ onComplete }: Level2EventsProps) {
         kind: 1,
         created_at: Math.floor(Date.now() / 1000),
         tags: [] as string[][],
-        content: "I completed Level 2: Events in Nostr Learn!",
+        content: "I completed Level 2: Events in Nostr Learning Center!",
       };
       let event;
       if (sk) {

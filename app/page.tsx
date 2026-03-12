@@ -9,7 +9,7 @@ export default function HomePage() {
       <header className="border-b border-zinc-800 px-4 py-4 sm:px-6">
         <div className="mx-auto flex max-w-4xl items-center justify-between">
           <Link href="/" className="text-xl font-bold text-amber-500">
-            Nostr Learn
+            Nostr Learning Center
           </Link>
           <div className="flex items-center gap-4">
             <DevModeToggle />

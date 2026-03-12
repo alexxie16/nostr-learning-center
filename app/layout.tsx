@@ -5,7 +5,7 @@ import { ProgressProvider } from "@/components/ProgressProvider";
 import { DevModeProvider } from "@/components/DevModeProvider";
 
 export const metadata: Metadata = {
-  title: "Nostr Learn",
+  title: "Nostr Learning Center",
   description: "A fun way to learn the Nostr protocol",
 };
 
