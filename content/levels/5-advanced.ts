@@ -2,8 +2,9 @@ import type { LevelContent } from "./types";
 
 export const level5: LevelContent = {
   id: 5,
-  name: "Advanced Nostr",
-  description: "DMs, reactions, Zaps, and more",
+  name: "Kinds",
+  description: "Kind 0, 1, 7, 9734 — DMs, reactions, Zaps, and more",
+  track: "basics",
   quiz: [
     {
       question: "What is a Nostr 'reaction' (kind 7)?",

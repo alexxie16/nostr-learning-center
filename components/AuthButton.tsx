@@ -1,9 +1,13 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useNostr } from "./NostrProvider";
 
 export function AuthButton() {
   const { pubkey, npub, login, logout, hasExtension } = useNostr();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
 
   if (pubkey) {
     return (
@@ -26,7 +30,7 @@ export function AuthButton() {
       onClick={() => login()}
       className="rounded bg-amber-500 px-4 py-2 text-sm font-medium text-zinc-900 hover:bg-amber-400 transition-colors"
     >
-      {hasExtension ? "Sign in with Nostr" : "Generate Demo Keys"}
+      {!mounted ? "Sign in" : hasExtension ? "Sign in with Nostr" : "Generate Demo Keys"}
     </button>
   );
 }

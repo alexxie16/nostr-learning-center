@@ -1,0 +1,57 @@
+import type { LevelContent } from "./types";
+
+export const level10: LevelContent = {
+  id: 10,
+  name: "Relay & Discovery (NIP-65, NIP-66, NIP-50)",
+  description: "Relay lists, discovery, and search",
+  track: "nips",
+  quiz: [
+    {
+      question: "What does NIP-65 specify?",
+      options: [
+        "Search syntax for relays",
+        "A standard relay list metadata event",
+        "DM encryption format",
+        "A video streaming protocol",
+      ],
+      correct: 1,
+      explanation:
+        "NIP-65 defines how users publish their preferred relay lists as metadata (kind 10002).",
+    },
+    {
+      question: "Which event kind does NIP-65 use for relay lists?",
+      options: ["1", "9735", "10002", "3"],
+      correct: 2,
+      explanation: "Relay lists are stored as kind 10002 events.",
+    },
+    {
+      question: "One benefit of NIP-65 relay lists is:",
+      options: [
+        "Eliminating relays completely",
+        "Improving performance by focusing on preferred relays",
+        "Automatically encrypting all traffic",
+        "Forcing all users onto the same relays",
+      ],
+      correct: 1,
+      explanation:
+        "NIP-65 allows clients to optimize connections and queries using user-specified relay preferences.",
+    },
+    {
+      question: "NIP-66 focuses on:",
+      options: [
+        "Encrypted payloads",
+        "Relay discovery and liveness monitoring",
+        "Badge systems",
+        "Moderated communities",
+      ],
+      correct: 1,
+      explanation: "NIP-66 is about discovering relays and checking whether they are alive.",
+    },
+    {
+      question: "Which NIP adds standardized search capabilities to Nostr?",
+      options: ["NIP-21", "NIP-43", "NIP-50", "NIP-71"],
+      correct: 2,
+      explanation: "NIP-50 defines search capability for relays and clients.",
+    },
+  ],
+};

@@ -4,6 +4,7 @@ export const level2: LevelContent = {
   id: 2,
   name: "Events",
   description: "Understand how data is structured in Nostr",
+  track: "basics",
   quiz: [
     {
       question: "Which field uniquely identifies a Nostr event?",

@@ -4,6 +4,7 @@ export const level4: LevelContent = {
   id: 4,
   name: "NIPs",
   description: "Explore Nostr Implementation Possibilities",
+  track: "basics",
   quiz: [
     {
       question: "What does NIP stand for?",

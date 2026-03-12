@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AuthButton } from "@/components/AuthButton";
+import { DevModeToggle } from "@/components/DevModeToggle";
 import { LevelSelect } from "@/components/LevelSelect";
 
 export default function HomePage() {
@@ -10,7 +11,10 @@ export default function HomePage() {
           <Link href="/" className="text-xl font-bold text-amber-500">
             Nostr Learn
           </Link>
-          <AuthButton />
+          <div className="flex items-center gap-4">
+            <DevModeToggle />
+            <AuthButton />
+          </div>
         </div>
       </header>
 

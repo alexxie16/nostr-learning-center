@@ -1,5 +1,7 @@
 import type { EventTemplate } from "nostr-tools";
 import { getPool, DEFAULT_RELAYS, PROGRESS_D_TAG } from "./nostr";
+import { isDeveloperMode } from "./devMode";
+import { LEVELS } from "@/content/levels";
 
 const STORAGE_KEY = "nostr-learn-progress";
 
@@ -46,8 +48,38 @@ export function saveProgress(progress: Progress): void {
 }
 
 export function isLevelUnlocked(level: number, progress: Progress): boolean {
-  if (level === 1) return true;
-  return progress.completedLevels.includes(level - 1);
+  const isValidLevel = LEVELS.some((l) => l.id === level);
+  if (!isValidLevel) return false;
+
+  if (isDeveloperMode()) return true;
+
+  const levelMeta = LEVELS.find((l) => l.id === level);
+  if (!levelMeta) return false;
+
+  if (levelMeta.track === "basics") {
+    if (level === 1) return true;
+    return progress.completedLevels.includes(level - 1);
+  }
+
+  if (levelMeta.track === "nips") {
+    const basicsComplete = [1, 2, 3, 4, 5].every((id) =>
+      progress.completedLevels.includes(id)
+    );
+    if (!basicsComplete) return false;
+    const nipsLevels = LEVELS.filter((l) => l.track === "nips").map((l) => l.id).sort((a, b) => a - b);
+    const idx = nipsLevels.indexOf(level);
+    if (idx <= 0) return true;
+    return progress.completedLevels.includes(nipsLevels[idx - 1]!);
+  }
+
+  if (levelMeta.track === "kinds") {
+    const basicsComplete = [1, 2, 3, 4, 5].every((id) =>
+      progress.completedLevels.includes(id)
+    );
+    return basicsComplete;
+  }
+
+  return false;
 }
 
 export function markLevelComplete(level: number, quizScore: number): Progress {

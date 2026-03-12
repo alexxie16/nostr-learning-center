@@ -4,6 +4,7 @@ export const level3: LevelContent = {
   id: 3,
   name: "Relays",
   description: "Discover how relays store and distribute events",
+  track: "basics",
   quiz: [
     {
       question: "What is a Nostr relay?",

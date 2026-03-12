@@ -4,6 +4,7 @@ export const level1: LevelContent = {
   id: 1,
   name: "Keys",
   description: "Learn about cryptographic keypairs and Nostr identity",
+  track: "basics",
   quiz: [
     {
       question: "Which key should you NEVER share?",
