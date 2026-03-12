@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { TaskCard } from "../shared/TaskCard";
-import { QuizCard } from "../shared/QuizCard";
+import { QuizCard, type QuizResultItem } from "../shared/QuizCard";
 import { LevelCompleteCard } from "../shared/LevelCompleteCard";
 import { useNostr } from "../NostrProvider";
 import { generateKeypair, getNpub } from "@/lib/nostr";
@@ -16,6 +16,7 @@ export function Level1Keys({ onComplete }: Level1KeysProps) {
   const [step, setStep] = useState<"task" | "quiz" | "done">("task");
   const [generatedNpub, setGeneratedNpub] = useState<string | null>(null);
   const [quizScore, setQuizScore] = useState(0);
+  const [quizResults, setQuizResults] = useState<QuizResultItem[]>([]);
   const { npub, login } = useNostr();
 
   const handleGenerate = () => {
@@ -28,8 +29,9 @@ export function Level1Keys({ onComplete }: Level1KeysProps) {
     if (toCopy) await navigator.clipboard.writeText(toCopy);
   };
 
-  const handleQuizComplete = (score: number) => {
+  const handleQuizComplete = (score: number, results: QuizResultItem[]) => {
     setQuizScore(score);
+    setQuizResults(results);
     setStep("done");
     onComplete(score);
   };
@@ -97,6 +99,7 @@ export function Level1Keys({ onComplete }: Level1KeysProps) {
           levelName="Keys"
           quizScore={quizScore}
           message="You learned about Nostr keys."
+          quizResults={quizResults}
         />
       )}
     </div>

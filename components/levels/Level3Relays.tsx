@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { TaskCard } from "../shared/TaskCard";
-import { QuizCard } from "../shared/QuizCard";
+import { QuizCard, type QuizResultItem } from "../shared/QuizCard";
 import { LevelCompleteCard } from "../shared/LevelCompleteCard";
 import { useNostr } from "../NostrProvider";
 import { fetchEvents, DEFAULT_RELAYS } from "@/lib/nostr";
@@ -19,6 +19,7 @@ export function Level3Relays({ onComplete }: Level3RelaysProps) {
   const [published, setPublished] = useState(false);
   const [loading, setLoading] = useState(false);
   const [quizScore, setQuizScore] = useState(0);
+  const [quizResults, setQuizResults] = useState<QuizResultItem[]>([]);
   const { signEvent, publish } = useNostr();
 
   const handleFetch = async () => {
@@ -49,8 +50,9 @@ export function Level3Relays({ onComplete }: Level3RelaysProps) {
     }
   };
 
-  const handleQuizComplete = (score: number) => {
+  const handleQuizComplete = (score: number, results: QuizResultItem[]) => {
     setQuizScore(score);
+    setQuizResults(results);
     setStep("done");
     onComplete(score);
   };
@@ -144,6 +146,7 @@ export function Level3Relays({ onComplete }: Level3RelaysProps) {
           levelName="Relays"
           quizScore={quizScore}
           message="You understand relays."
+          quizResults={quizResults}
         />
       )}
     </div>

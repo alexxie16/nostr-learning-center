@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { TaskCard } from "../shared/TaskCard";
-import { QuizCard } from "../shared/QuizCard";
+import { QuizCard, type QuizResultItem } from "../shared/QuizCard";
 import { LevelCompleteCard } from "../shared/LevelCompleteCard";
 import { useNostr } from "../NostrProvider";
 import { createAndSignEvent } from "@/lib/nostr";
@@ -26,6 +26,7 @@ export function Level2Events({ onComplete }: Level2EventsProps) {
   const [step, setStep] = useState<"inspect" | "build" | "quiz" | "done">("inspect");
   const [signedEvent, setSignedEvent] = useState<object | null>(null);
   const [quizScore, setQuizScore] = useState(0);
+  const [quizResults, setQuizResults] = useState<QuizResultItem[]>([]);
   const { sk, pubkey, signEvent } = useNostr();
 
   const handleBuildAndSign = async () => {
@@ -48,8 +49,9 @@ export function Level2Events({ onComplete }: Level2EventsProps) {
     }
   };
 
-  const handleQuizComplete = (score: number) => {
+  const handleQuizComplete = (score: number, results: QuizResultItem[]) => {
     setQuizScore(score);
+    setQuizResults(results);
     setStep("done");
     onComplete(score);
   };
@@ -123,6 +125,7 @@ export function Level2Events({ onComplete }: Level2EventsProps) {
           levelName="Events"
           quizScore={quizScore}
           message="You understand Nostr events."
+          quizResults={quizResults}
         />
       )}
     </div>

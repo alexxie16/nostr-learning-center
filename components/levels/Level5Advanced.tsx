@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { TaskCard } from "../shared/TaskCard";
-import { QuizCard } from "../shared/QuizCard";
+import { QuizCard, type QuizResultItem } from "../shared/QuizCard";
 import { LevelCompleteCard } from "../shared/LevelCompleteCard";
 import { useNostr } from "../NostrProvider";
 import { QUIZZES } from "@/content/levels";
@@ -15,6 +15,7 @@ export function Level5Advanced({ onComplete }: Level5AdvancedProps) {
   const [step, setStep] = useState<"nip07" | "reaction" | "quiz" | "done">("nip07");
   const [reactionPublished, setReactionPublished] = useState(false);
   const [quizScore, setQuizScore] = useState(0);
+  const [quizResults, setQuizResults] = useState<QuizResultItem[]>([]);
   const { pubkey, hasExtension, login, signEvent, publish } = useNostr();
 
   const handleSignIn = async () => {
@@ -41,8 +42,9 @@ export function Level5Advanced({ onComplete }: Level5AdvancedProps) {
     }
   };
 
-  const handleQuizComplete = (score: number) => {
+  const handleQuizComplete = (score: number, results: QuizResultItem[]) => {
     setQuizScore(score);
+    setQuizResults(results);
     setStep("done");
     onComplete(score);
   };
@@ -120,6 +122,7 @@ export function Level5Advanced({ onComplete }: Level5AdvancedProps) {
           levelName="Advanced Nostr"
           quizScore={quizScore}
           message="You've mastered advanced Nostr."
+          quizResults={quizResults}
         />
       )}
     </div>

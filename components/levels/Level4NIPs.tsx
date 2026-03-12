@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { TaskCard } from "../shared/TaskCard";
-import { QuizCard } from "../shared/QuizCard";
+import { QuizCard, type QuizResultItem } from "../shared/QuizCard";
 import { LevelCompleteCard } from "../shared/LevelCompleteCard";
 import { decodeNpub, getNpub } from "@/lib/nostr";
 import { QUIZZES } from "@/content/levels";
@@ -17,6 +17,7 @@ export function Level4NIPs({ onComplete }: Level4NIPsProps) {
   const [decoded, setDecoded] = useState("");
   const [inputNpub, setInputNpub] = useState("");
   const [quizScore, setQuizScore] = useState(0);
+  const [quizResults, setQuizResults] = useState<QuizResultItem[]>([]);
 
   const handleEncode = () => {
     // Use a sample hex pubkey for encoding demo
@@ -33,8 +34,9 @@ export function Level4NIPs({ onComplete }: Level4NIPsProps) {
     }
   };
 
-  const handleQuizComplete = (score: number) => {
+  const handleQuizComplete = (score: number, results: QuizResultItem[]) => {
     setQuizScore(score);
+    setQuizResults(results);
     setStep("done");
     onComplete(score);
   };
@@ -123,6 +125,7 @@ export function Level4NIPs({ onComplete }: Level4NIPsProps) {
           levelName="NIPs"
           quizScore={quizScore}
           message="You understand NIPs."
+          quizResults={quizResults}
         />
       )}
     </div>

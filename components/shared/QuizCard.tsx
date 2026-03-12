@@ -1,16 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import type { QuizQuestion } from "@/content/levels";
 
-interface QuizQuestion {
+export interface QuizResultItem {
   question: string;
   options: string[];
   correct: number;
+  userChoice: number;
+  explanation: string;
 }
 
 interface QuizCardProps {
   questions: QuizQuestion[];
-  onComplete: (score: number) => void;
+  onComplete: (score: number, results: QuizResultItem[]) => void;
 }
 
 export function QuizCard({ questions, onComplete }: QuizCardProps) {
@@ -18,6 +21,7 @@ export function QuizCard({ questions, onComplete }: QuizCardProps) {
   const [selected, setSelected] = useState<number | null>(null);
   const [correctCount, setCorrectCount] = useState(0);
   const [showResult, setShowResult] = useState(false);
+  const [answers, setAnswers] = useState<{ questionIndex: number; selectedIndex: number }[]>([]);
 
   const q = questions[current];
   const isLast = current === questions.length - 1;
@@ -26,7 +30,7 @@ export function QuizCard({ questions, onComplete }: QuizCardProps) {
     if (showResult) return;
     setSelected(idx);
     setShowResult(true);
-    // Only count non-last questions here; last question is counted in handleNext
+    setAnswers((prev) => [...prev, { questionIndex: current, selectedIndex: idx }]);
     if (idx === q.correct && !isLast) {
       setCorrectCount((c) => c + 1);
     }
@@ -34,10 +38,18 @@ export function QuizCard({ questions, onComplete }: QuizCardProps) {
 
   const handleNext = () => {
     if (isLast) {
+      const lastCorrect = selected === q.correct ? 1 : 0;
       const score = Math.round(
-        ((correctCount + (selected === q.correct ? 1 : 0)) / questions.length) * 100
+        ((correctCount + lastCorrect) / questions.length) * 100
       );
-      onComplete(score);
+      const results: QuizResultItem[] = questions.map((quest, i) => ({
+        question: quest.question,
+        options: quest.options,
+        correct: quest.correct,
+        userChoice: i === current ? (selected ?? 0) : (answers[i]?.selectedIndex ?? 0),
+        explanation: quest.explanation,
+      }));
+      onComplete(score, results);
     } else {
       setCurrent((c) => c + 1);
       setSelected(null);
