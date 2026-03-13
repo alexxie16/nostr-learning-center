@@ -34,8 +34,8 @@ export function Level2Events({ onComplete }: Level2EventsProps) {
       const template = {
         kind: 1,
         created_at: Math.floor(Date.now() / 1000),
-        tags: [] as string[][],
-        content: "I completed Level 2: Events in Nostr Learning Center!",
+        tags: [["t", "nostrlearn"], ["t", "nostr"]],
+        content: "Built my first Nostr event! Level 2 complete at Nostr Learning Center 🎯 #nostrlearn #nostr",
       };
       let event;
       if (sk) {

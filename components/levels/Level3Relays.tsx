@@ -39,8 +39,8 @@ export function Level3Relays({ onComplete }: Level3RelaysProps) {
       const template = {
         kind: 1,
         created_at: Math.floor(Date.now() / 1000),
-        tags: [["t", "nostrlearn"]],
-        content: "I completed Level 3: Relays in Nostr Learning Center! 🚀",
+        tags: [["t", "nostrlearn"], ["t", "nostr"]],
+        content: "Published to Nostr relays! Level 3 complete at Nostr Learning Center 📡 #nostrlearn #nostr",
       };
       const event = await signEvent(template);
       await publish(event);

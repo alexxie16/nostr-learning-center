@@ -4,15 +4,15 @@ An interactive web game for learning the Nostr protocol. Master the decentralize
 
 ## Features
 
-- **11 levels** across 3 tracks:
-  - **Basics** (5): Keys, Events, Relays, NIPs, Kinds — hands-on tasks + quizzes
-  - **Advanced NIPs** (6): Core (01/02/17), Identity (05/19), Browser (07/46), Zaps (57/47/75), Relays (65/66/50), Social (51/52/53/58/72) — quizzes
+- **11 levels** in 3 tracks (Basics → Advanced NIPs → Advanced Kinds):
+  - **Basics (5)**: Keys, Events, Relays, NIPs, Kinds — interactive tasks (generate keys, sign events, fetch from relays, encode/decode npub, publish reactions) plus a quiz per level
+  - **Advanced NIPs (6)**: Core (01/02/17), Identity (05/19), Browser (07/46), Zaps (57/47/75), Relays (65/66/50), Social (51/52/53/58/72) — quiz-only levels with explanations
   - **Advanced Kinds** — coming soon
-- **Hybrid learning**: Hands-on tasks (Keys, Events, Relays, NIPs, Kinds) and quizzes with explanations
-- **Nostr sign-in**: NIP-07 browser extension (Alby, nos2x) or generate demo keys for try-it mode
-- **Progress sync**: When signed in with NIP-07, progress syncs to Nostr via NIP-78 (kind 30078)
-- **Share to Nostr**: Publish level completions as kind-1 notes with `#nostrlearn` and `#nostr` tags
-- **Developer mode**: Unlock all levels for testing (localStorage toggle)
+- **Quizzes** — multiple-choice with instant feedback and explanations for each answer
+- **Sign in** — NIP-07 extension (Alby, nos2x) or demo keys (try without an extension)
+- **Progress sync** — when using NIP-07, progress saves to Nostr via NIP-78 so you can pick up on another device
+- **Share** — publish level completions as kind-1 notes (`#nostrlearn` / `#nostr`)
+- **Developer mode** — toggle to unlock all levels for testing
 
 ## Run locally
 
@@ -22,13 +22,6 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
-
-## Build
-
-```bash
-npm run build
-npm start
-```
 
 ## Tech
 
