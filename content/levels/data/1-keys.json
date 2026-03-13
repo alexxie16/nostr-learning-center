@@ -1,0 +1,26 @@
+{
+  "id": 1,
+  "name": "Keys",
+  "description": "Learn about cryptographic keypairs and Nostr identity",
+  "track": "basics",
+  "quiz": [
+    {
+      "question": "Which key should you NEVER share?",
+      "options": ["Public key (npub)", "Private key (nsec)", "Both"],
+      "correct": 1,
+      "explanation": "Your private key (nsec) proves you control your identity. Anyone with it can sign events as you. The public key (npub) is safe to share—it's how others identify you."
+    },
+    {
+      "question": "What format is a Nostr public key typically displayed in?",
+      "options": ["Hex string", "npub... (bech32)", "Base64"],
+      "correct": 1,
+      "explanation": "NIP-19 defines bech32 encoding for Nostr identifiers. The 'npub' prefix makes keys human-readable and includes a checksum to catch typos."
+    },
+    {
+      "question": "Your Nostr identity is derived from:",
+      "options": ["A username you choose", "A cryptographic keypair", "An email address"],
+      "correct": 1,
+      "explanation": "Nostr uses secp256k1 keypairs (same as Bitcoin). Your identity is cryptographically derived—no central authority, no sign-up, and you can prove ownership of your public key with your private key."
+    }
+  ]
+}

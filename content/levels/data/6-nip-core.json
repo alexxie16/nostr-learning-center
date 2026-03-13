@@ -1,0 +1,32 @@
+{
+  "id": 6,
+  "name": "Core NIPs (01, 02, 17)",
+  "description": "Basic protocol flow, event format, and DMs",
+  "track": "nips",
+  "quiz": [
+    {
+      "question": "What does NIP-01 define in the Nostr ecosystem?",
+      "options": ["Lightning payments", "The basic protocol flow and event format", "Relay discovery", "Moderated communities"],
+      "correct": 1,
+      "explanation": "NIP-01 defines the basic protocol flow and event structure that every Nostr implementation must support."
+    },
+    {
+      "question": "What is the main role of relays as described in NIP-01?",
+      "options": ["To mine blocks", "To store, receive, and forward events between clients", "To issue DNS names", "To encrypt private keys"],
+      "correct": 1,
+      "explanation": "Relays receive events from clients, store them, and deliver them to other clients that request them."
+    },
+    {
+      "question": "NIP-02 (Follow List / Contacts) is mainly about:",
+      "options": ["Mapping keys to DNS", "How users represent their contact/follow lists", "Encrypted DMs", "Live video events"],
+      "correct": 1,
+      "explanation": "NIP-02 specifies how to represent follow/contact lists as events."
+    },
+    {
+      "question": "Which NIP currently describes private direct messages on Nostr?",
+      "options": ["NIP-04", "NIP-17", "NIP-57", "NIP-65"],
+      "correct": 1,
+      "explanation": "NIP-17 defines private direct messages and replaces the earlier DM NIP-04."
+    }
+  ]
+}

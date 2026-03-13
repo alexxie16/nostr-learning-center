@@ -1,44 +1,9 @@
 import type { LevelContent, QuizQuestion, TrackId } from "./types";
-import { level1 } from "./1-keys";
-import { level2 } from "./2-events";
-import { level3 } from "./3-relays";
-import { level4 } from "./4-nips";
-import { level5 } from "./5-advanced";
-import { level6 } from "./6-nip-core";
-import { level7 } from "./7-nip-identity";
-import { level8 } from "./8-nip-browser";
-import { level9 } from "./9-nip-zaps";
-import { level10 } from "./10-nip-relays";
-import { level11 } from "./11-nip-social";
+import { loadLevels } from "./load";
 
-const levels: LevelContent[] = [
-  level1,
-  level2,
-  level3,
-  level4,
-  level5,
-  level6,
-  level7,
-  level8,
-  level9,
-  level10,
-  level11,
-];
+const levels = loadLevels();
 
 export type { LevelContent, QuizQuestion, TrackId };
-export {
-  level1,
-  level2,
-  level3,
-  level4,
-  level5,
-  level6,
-  level7,
-  level8,
-  level9,
-  level10,
-  level11,
-};
 
 /** Ordered list of level metadata for navigation and display */
 export const LEVELS = levels.map((l) => ({

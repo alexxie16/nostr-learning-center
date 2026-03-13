@@ -1,0 +1,26 @@
+{
+  "id": 5,
+  "name": "Kinds",
+  "description": "Kind 0, 1, 7, 9734 — DMs, reactions, Zaps, and more",
+  "track": "basics",
+  "quiz": [
+    {
+      "question": "What is a Nostr 'reaction' (kind 7)?",
+      "options": ["A comment on a note", "A like/emoji response to an event", "A direct message"],
+      "correct": 1,
+      "explanation": "Reactions are kind-7 events that reference another event (via 'e' tag) and optionally include an emoji (often '+' or '❤️'). They're lightweight affirmations."
+    },
+    {
+      "question": "Zaps (kind 9734) are:",
+      "options": ["Encrypted notes", "Bitcoin Lightning tips over Nostr", "Profile updates"],
+      "correct": 1,
+      "explanation": "Zaps are Lightning payments sent as Nostr events. NIP-57 defines how they work: you zap a user or event, and the payment receipt is published as a kind-9734 event."
+    },
+    {
+      "question": "NIP-07 enables:",
+      "options": ["Encrypted DMs", "Browser extension sign-in (window.nostr)", "Relay authentication"],
+      "correct": 1,
+      "explanation": "NIP-07 defines window.nostr for browser extensions (Alby, nos2x). Websites can call getPublicKey() and signEvent() to let users authenticate without pasting keys."
+    }
+  ]
+}
