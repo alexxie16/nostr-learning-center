@@ -35,7 +35,11 @@ export function LevelQuizOnly({
   return (
     <div className="space-y-6">
       {step === "quiz" && (
-        <QuizCard questions={questions} onComplete={handleQuizComplete} />
+        <QuizCard
+          key={levelId}
+          questions={questions}
+          onComplete={handleQuizComplete}
+        />
       )}
       {step === "done" && (
         <LevelCompleteCard
