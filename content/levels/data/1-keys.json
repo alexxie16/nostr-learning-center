@@ -21,6 +21,18 @@
       "options": ["A username you choose", "A cryptographic keypair", "An email address"],
       "correct": 1,
       "explanation": "Nostr uses secp256k1 keypairs (same as Bitcoin). Your identity is cryptographically derived—no central authority, no sign-up, and you can prove ownership of your public key with your private key."
+    },
+    {
+      "question": "Which elliptic curve does Nostr use for keypairs?",
+      "options": ["Ed25519", "secp256k1", "P-256", "X25519"],
+      "correct": 1,
+      "explanation": "Nostr uses secp256k1, the same curve as Bitcoin. This allows Schnorr signatures and compatibility with Bitcoin tooling."
+    },
+    {
+      "question": "What happens if you lose your private key?",
+      "options": ["You can recover it via email", "Your identity is permanently lost", "A relay can issue a new one", "You get a new npub but keep the same history"],
+      "correct": 1,
+      "explanation": "The private key is derived from random entropy. There is no recovery mechanism—losing it means permanent loss of that identity, similar to a Bitcoin wallet."
     }
   ]
 }

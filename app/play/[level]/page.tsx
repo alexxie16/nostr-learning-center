@@ -7,6 +7,7 @@ import { LEVELS } from "@/content/levels";
 import { useProgress } from "@/components/ProgressProvider";
 import { useDevMode } from "@/components/DevModeProvider";
 import { DevModeToggle } from "@/components/DevModeToggle";
+import { AuthButton } from "@/components/AuthButton";
 import { Level1Keys } from "@/components/levels/Level1Keys";
 import { Level2Events } from "@/components/levels/Level2Events";
 import { Level3Relays } from "@/components/levels/Level3Relays";
@@ -127,6 +128,7 @@ export default function PlayPage() {
           </Link>
           <div className="flex items-center gap-4">
             <DevModeToggle />
+            <AuthButton />
             <span className="text-sm text-zinc-400">
               Level {levelNum}: {levelInfo.name}
             </span>

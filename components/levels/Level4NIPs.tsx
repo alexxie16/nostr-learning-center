@@ -2,17 +2,33 @@
 
 import { useState } from "react";
 import { TaskCard } from "../shared/TaskCard";
+import { ExerciseCard, type ExerciseItem } from "../shared/ExerciseCard";
 import { QuizCard, type QuizResultItem } from "../shared/QuizCard";
 import { LevelCompleteCard } from "../shared/LevelCompleteCard";
 import { decodeNpub, getNpub } from "@/lib/nostr";
 import { QUIZZES } from "@/content/levels";
+
+const EXERCISES: ExerciseItem[] = [
+  {
+    question: "What does NIP stand for?",
+    options: ["Nostr Identity Protocol", "Nostr Implementation Possibilities", "Network Internet Protocol"],
+    correct: 1,
+    explanation: "NIPs are technical specs that extend Nostr. Like BIPs for Bitcoin.",
+  },
+  {
+    question: "NIP-05 allows linking your key to what?",
+    options: ["A relay URL", "A domain (e.g. user@example.com)", "A Lightning address"],
+    correct: 1,
+    explanation: "NIP-05 maps a human-readable identifier like alice@example.com to your Nostr public key via a JSON file on your domain.",
+  },
+];
 
 interface Level4NIPsProps {
   onComplete: (quizScore: number) => void;
 }
 
 export function Level4NIPs({ onComplete }: Level4NIPsProps) {
-  const [step, setStep] = useState<"encode" | "decode" | "quiz" | "done">("encode");
+  const [step, setStep] = useState<"encode" | "decode" | "ex1" | "ex2" | "quiz" | "done">("encode");
   const [encoded, setEncoded] = useState("");
   const [decoded, setDecoded] = useState("");
   const [inputNpub, setInputNpub] = useState("");
@@ -100,23 +116,41 @@ export function Level4NIPs({ onComplete }: Level4NIPsProps) {
             {decoded && (
               <div>
                 <p className="text-xs text-zinc-500">Hex result:</p>
-                <code className="block rounded bg-zinc-800 p-3 text-xs text-amber-400 break-all">
+                <code
+                  className={`block rounded bg-zinc-800 p-3 text-xs break-all ${
+                    decoded === "Invalid npub" ? "text-red-400" : "text-amber-400"
+                  }`}
+                >
                   {decoded}
                 </code>
-                <button
-                  onClick={() => setStep("quiz")}
-                  className="mt-2 rounded-lg bg-amber-500 px-4 py-2 text-sm font-medium text-zinc-900 hover:bg-amber-400"
-                >
-                  Continue to Quiz
-                </button>
+                {decoded !== "Invalid npub" && (
+                  <button
+                    onClick={() => setStep("ex1")}
+                    className="mt-2 rounded-lg bg-amber-500 px-4 py-2 text-sm font-medium text-zinc-900 hover:bg-amber-400"
+                  >
+                    Continue
+                  </button>
+                )}
               </div>
             )}
           </div>
         </TaskCard>
       )}
 
+      {step === "ex1" && (
+        <ExerciseCard exercise={EXERCISES[0]!} onCorrect={() => setStep("ex2")} />
+      )}
+
+      {step === "ex2" && (
+        <ExerciseCard exercise={EXERCISES[1]!} onCorrect={() => setStep("quiz")} />
+      )}
+
       {step === "quiz" && (
-        <QuizCard questions={QUIZZES[4]} onComplete={handleQuizComplete} />
+        <QuizCard
+          questions={QUIZZES[4]}
+          onComplete={handleQuizComplete}
+          requireAllCorrect
+        />
       )}
 
       {step === "done" && (

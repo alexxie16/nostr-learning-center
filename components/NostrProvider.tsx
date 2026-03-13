@@ -76,8 +76,17 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
 
   const publish = useCallback(async (event: Event) => {
     const pool = getPool();
-    const results = pool.publish([...DEFAULT_RELAYS], event);
-    await Promise.any(results);
+    const relays = [...DEFAULT_RELAYS];
+    const results = pool.publish(relays, event);
+    const timeoutMs = 15000;
+    const withTimeout = (p: Promise<string>) =>
+      Promise.race([
+        p,
+        new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error("Relay timeout. Check your connection.")), timeoutMs)
+        ),
+      ]);
+    await Promise.any(results.map(withTimeout));
   }, []);
 
   const value: NostrContextValue = {

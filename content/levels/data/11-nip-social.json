@@ -33,6 +33,12 @@
       "options": ["NIP-70", "NIP-72", "NIP-43", "NIP-04"],
       "correct": 1,
       "explanation": "NIP-72 is Moderated Communities."
+    },
+    {
+      "question": "NIP-33 parameterized replaceable events are addressed by a coordinate of:",
+      "options": ["kind only", "kind and pubkey", "kind:pubkey:d-tag-value", "pubkey and content hash"],
+      "correct": 2,
+      "explanation": "The address is kind:pubkey:d-value. The 'd' tag distinguishes multiple replaceable events of the same kind per user (e.g., different articles or lists)."
     }
   ]
 }

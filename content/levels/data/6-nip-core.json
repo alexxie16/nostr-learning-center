@@ -27,6 +27,12 @@
       "options": ["NIP-04", "NIP-17", "NIP-57", "NIP-65"],
       "correct": 1,
       "explanation": "NIP-17 defines private direct messages and replaces the earlier DM NIP-04."
+    },
+    {
+      "question": "NIP-59 (Gift Wrap) is used with NIP-17 DMs to:",
+      "options": ["Compress message payloads", "Hide sender identity from relays via an outer throwaway-signed layer", "Enable group chats", "Add expiration to messages"],
+      "correct": 1,
+      "explanation": "Gift Wrap adds a layer signed by a disposable key so relays and observers cannot see who the real sender is. The recipient decrypts the inner seal to identify the sender."
     }
   ]
 }

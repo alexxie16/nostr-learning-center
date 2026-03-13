@@ -11,6 +11,7 @@ import {
 export const DEFAULT_RELAYS = [
   "wss://relay.damus.io",
   "wss://nos.lol",
+  "wss://relay.nostr.band",
 ] as const;
 
 /** NIP-78 app data identifier for progress sync */

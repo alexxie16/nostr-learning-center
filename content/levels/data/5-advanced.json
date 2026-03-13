@@ -21,6 +21,18 @@
       "options": ["Encrypted DMs", "Browser extension sign-in (window.nostr)", "Relay authentication"],
       "correct": 1,
       "explanation": "NIP-07 defines window.nostr for browser extensions (Alby, nos2x). Websites can call getPublicKey() and signEvent() to let users authenticate without pasting keys."
+    },
+    {
+      "question": "Parameterized replaceable events (kinds 30000–39999) use which tag for a unique identifier?",
+      "options": ["'e' tag", "'p' tag", "'d' tag", "'r' tag"],
+      "correct": 2,
+      "explanation": "The 'd' tag provides a unique identifier within a kind. Events are addressed as kind:pubkey:d-value, allowing multiple replaceable events per user per kind (e.g., articles, lists)."
+    },
+    {
+      "question": "NIP-26 (Delegated Event Signing) allows:",
+      "options": ["Relays to sign on your behalf", "A delegatee key to sign events attributed to a delegator", "Anonymous posting", "Encrypted content in notes"],
+      "correct": 1,
+      "explanation": "NIP-26 lets you authorize another keypair to sign events as you. Useful for cold storage (root key offline, delegated key for daily use) and per-app keypairs."
     }
   ]
 }

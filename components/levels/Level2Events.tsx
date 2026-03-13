@@ -2,11 +2,27 @@
 
 import { useState } from "react";
 import { TaskCard } from "../shared/TaskCard";
+import { ExerciseCard, type ExerciseItem } from "../shared/ExerciseCard";
 import { QuizCard, type QuizResultItem } from "../shared/QuizCard";
 import { LevelCompleteCard } from "../shared/LevelCompleteCard";
 import { useNostr } from "../NostrProvider";
 import { createAndSignEvent } from "@/lib/nostr";
 import { QUIZZES } from "@/content/levels";
+
+const EXERCISES: ExerciseItem[] = [
+  {
+    question: "What does 'kind' represent in a Nostr event?",
+    options: ["The relay it came from", "The type of event (e.g. note, profile)", "Encryption level"],
+    correct: 1,
+    explanation: "Kind determines the event type: 0=profile, 1=text note, 4=DM, 7=reaction, etc.",
+  },
+  {
+    question: "Who adds the 'sig' (signature) to an event?",
+    options: ["The relay", "The author using their private key", "Anyone can add it"],
+    correct: 1,
+    explanation: "The author signs with their private key. The signature proves the event wasn't tampered with.",
+  },
+];
 
 interface Level2EventsProps {
   onComplete: (quizScore: number) => void;
@@ -23,7 +39,7 @@ const SAMPLE_EVENT = {
 };
 
 export function Level2Events({ onComplete }: Level2EventsProps) {
-  const [step, setStep] = useState<"inspect" | "build" | "quiz" | "done">("inspect");
+  const [step, setStep] = useState<"inspect" | "build" | "ex1" | "ex2" | "quiz" | "done">("inspect");
   const [signedEvent, setSignedEvent] = useState<object | null>(null);
   const [quizScore, setQuizScore] = useState(0);
   const [quizResults, setQuizResults] = useState<QuizResultItem[]>([]);
@@ -105,18 +121,30 @@ export function Level2Events({ onComplete }: Level2EventsProps) {
                 {JSON.stringify(signedEvent, null, 2)}
               </pre>
               <button
-                onClick={() => setStep("quiz")}
+                onClick={() => setStep("ex1")}
                 className="mt-4 rounded-lg bg-amber-500 px-4 py-2 text-sm font-medium text-zinc-900 hover:bg-amber-400"
               >
-                Continue to Quiz
+                Continue
               </button>
             </div>
           )}
         </TaskCard>
       )}
 
+      {step === "ex1" && (
+        <ExerciseCard exercise={EXERCISES[0]!} onCorrect={() => setStep("ex2")} />
+      )}
+
+      {step === "ex2" && (
+        <ExerciseCard exercise={EXERCISES[1]!} onCorrect={() => setStep("quiz")} />
+      )}
+
       {step === "quiz" && (
-        <QuizCard questions={QUIZZES[2]} onComplete={handleQuizComplete} />
+        <QuizCard
+          questions={QUIZZES[2]}
+          onComplete={handleQuizComplete}
+          requireAllCorrect
+        />
       )}
 
       {step === "done" && (

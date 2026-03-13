@@ -39,6 +39,12 @@
       "options": ["To compress events", "To make entities easy to share between users and apps", "To hide keys from relays", "To support video streaming"],
       "correct": 1,
       "explanation": "Bech32 encoding is used primarily for transportability between users, clients, and applications."
+    },
+    {
+      "question": "What does NIP-19's 'nprofile' encode?",
+      "options": ["A private key with relay hints", "A public key plus optional relay hints for discovery", "An event ID only", "A zap receipt"],
+      "correct": 1,
+      "explanation": "nprofile encodes a public key and optional relay URLs. Clients use it to know where to find a user's content when they follow or mention them."
     }
   ]
 }

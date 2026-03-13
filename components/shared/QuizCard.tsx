@@ -23,12 +23,14 @@ function shuffle<T>(arr: T[]): T[] {
 interface QuizCardProps {
   questions: QuizQuestion[];
   onComplete: (score: number, results: QuizResultItem[]) => void;
+  /** When true, user must answer all correctly to pass. Wrong answers trigger a retry. */
+  requireAllCorrect?: boolean;
 }
 
 const MAX_QUESTIONS = 4;
 
-export function QuizCard({ questions, onComplete }: QuizCardProps) {
-  const [displayQuestions] = useState(() =>
+export function QuizCard({ questions, onComplete, requireAllCorrect }: QuizCardProps) {
+  const [displayQuestions, setDisplayQuestions] = useState(() =>
     shuffle([...questions]).slice(0, MAX_QUESTIONS)
   );
   const [current, setCurrent] = useState(0);
@@ -36,6 +38,7 @@ export function QuizCard({ questions, onComplete }: QuizCardProps) {
   const [correctCount, setCorrectCount] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [answers, setAnswers] = useState<{ questionIndex: number; selectedIndex: number }[]>([]);
+  const [showRetry, setShowRetry] = useState(false);
 
   if (displayQuestions.length === 0) return null;
   const q = displayQuestions[current];
@@ -51,12 +54,29 @@ export function QuizCard({ questions, onComplete }: QuizCardProps) {
     }
   };
 
+  const resetQuiz = () => {
+    setDisplayQuestions(shuffle([...questions]).slice(0, MAX_QUESTIONS));
+    setCurrent(0);
+    setSelected(null);
+    setCorrectCount(0);
+    setShowResult(false);
+    setAnswers([]);
+    setShowRetry(false);
+  };
+
   const handleNext = () => {
     if (isLast) {
       const lastCorrect = selected === q.correct ? 1 : 0;
       const score = Math.round(
         ((correctCount + lastCorrect) / displayQuestions.length) * 100
       );
+      const allCorrect = score === 100;
+
+      if (requireAllCorrect && !allCorrect) {
+        setShowRetry(true);
+        return;
+      }
+
       const results: QuizResultItem[] = displayQuestions.map((quest, i) => ({
         question: quest.question,
         options: quest.options,
@@ -102,13 +122,26 @@ export function QuizCard({ questions, onComplete }: QuizCardProps) {
           );
         })}
       </ul>
-      {showResult && (
+      {showResult && !showRetry && (
         <button
           onClick={handleNext}
           className="mt-4 w-full rounded-lg bg-amber-500 py-2 text-sm font-medium text-zinc-900 hover:bg-amber-400"
         >
           {isLast ? "Finish Quiz" : "Next"}
         </button>
+      )}
+      {showRetry && (
+        <div className="mt-4 space-y-3 rounded-lg border border-amber-500/50 bg-amber-500/10 p-4">
+          <p className="text-sm text-amber-400">
+            You need to answer all questions correctly to pass. Review your answers and try again.
+          </p>
+          <button
+            onClick={resetQuiz}
+            className="w-full rounded-lg bg-amber-500 py-2 text-sm font-medium text-zinc-900 hover:bg-amber-400"
+          >
+            Try again
+          </button>
+        </div>
       )}
     </div>
   );

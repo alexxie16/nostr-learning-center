@@ -27,6 +27,12 @@
       "options": ["Describing target amounts and purposes for zaps", "Defining new key formats", "Relay performance scoring", "Encrypted payload versions"],
       "correct": 0,
       "explanation": "NIP-75 defines zap goals so users can signal funding targets and purposes."
+    },
+    {
+      "question": "In NIP-57, what is the difference between kind 9734 and kind 9735?",
+      "options": ["9734 is the zap receipt, 9735 is the zap request", "9734 is the zap request, 9735 is the zap receipt", "Both are identical", "9734 is for profile zaps, 9735 for note zaps"],
+      "correct": 1,
+      "explanation": "Kind 9734 is the signed zap request (what the sender creates). Kind 9735 is the zap receipt published by the Lightning Service Provider after the payment is made."
     }
   ]
 }

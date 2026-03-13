@@ -2,18 +2,34 @@
 
 import { useState } from "react";
 import { TaskCard } from "../shared/TaskCard";
+import { ExerciseCard, type ExerciseItem } from "../shared/ExerciseCard";
 import { QuizCard, type QuizResultItem } from "../shared/QuizCard";
 import { LevelCompleteCard } from "../shared/LevelCompleteCard";
 import { useNostr } from "../NostrProvider";
 import { generateKeypair, getNpub } from "@/lib/nostr";
 import { QUIZZES } from "@/content/levels";
 
+const EXERCISES: ExerciseItem[] = [
+  {
+    question: "Which key should you NEVER share?",
+    options: ["Public key (npub)", "Private key (nsec)", "Both"],
+    correct: 1,
+    explanation: "Your private key (nsec) proves you control your identity. Anyone with it can sign events as you.",
+  },
+  {
+    question: "What format is a Nostr public key typically displayed in?",
+    options: ["Hex string", "npub... (bech32)", "Base64"],
+    correct: 1,
+    explanation: "NIP-19 defines bech32 encoding. The 'npub' prefix makes keys human-readable and includes a checksum.",
+  },
+];
+
 interface Level1KeysProps {
   onComplete: (quizScore: number) => void;
 }
 
 export function Level1Keys({ onComplete }: Level1KeysProps) {
-  const [step, setStep] = useState<"task" | "quiz" | "done">("task");
+  const [step, setStep] = useState<"task" | "ex1" | "ex2" | "quiz" | "done">("task");
   const [generatedNpub, setGeneratedNpub] = useState<string | null>(null);
   const [quizScore, setQuizScore] = useState(0);
   const [quizResults, setQuizResults] = useState<QuizResultItem[]>([]);
@@ -79,18 +95,36 @@ export function Level1Keys({ onComplete }: Level1KeysProps) {
             )}
             {displayNpub && (
               <button
-                onClick={() => setStep("quiz")}
+                onClick={() => setStep("ex1")}
                 className="block rounded-lg bg-amber-500 px-4 py-2 text-sm font-medium text-zinc-900 hover:bg-amber-400"
               >
-                Continue to Quiz
+                Continue
               </button>
             )}
           </div>
         </TaskCard>
       )}
 
+      {step === "ex1" && (
+        <ExerciseCard
+          exercise={EXERCISES[0]!}
+          onCorrect={() => setStep("ex2")}
+        />
+      )}
+
+      {step === "ex2" && (
+        <ExerciseCard
+          exercise={EXERCISES[1]!}
+          onCorrect={() => setStep("quiz")}
+        />
+      )}
+
       {step === "quiz" && (
-        <QuizCard questions={QUIZZES[1]} onComplete={handleQuizComplete} />
+        <QuizCard
+          questions={QUIZZES[1]}
+          onComplete={handleQuizComplete}
+          requireAllCorrect
+        />
       )}
 
       {step === "done" && (

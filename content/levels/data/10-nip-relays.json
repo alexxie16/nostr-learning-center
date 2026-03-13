@@ -33,6 +33,12 @@
       "options": ["NIP-21", "NIP-43", "NIP-50", "NIP-71"],
       "correct": 2,
       "explanation": "NIP-50 defines search capability for relays and clients."
+    },
+    {
+      "question": "In NIP-65, what do 'read' and 'write' markers on relay URLs mean?",
+      "options": ["read = relay is up, write = relay is down", "read = where to fetch a user's content, write = where to publish to that user", "They are interchangeable", "read = DMs only, write = public notes only"],
+      "correct": 1,
+      "explanation": "When fetching content, use the user's 'write' relays. When sending DMs or mentions, publish to the recipient's 'read' relays. This is the outbox model for decentralized distribution."
     }
   ]
 }

@@ -21,6 +21,12 @@
       "options": ["Linking your key to a domain (user@domain.com)", "Direct messages", "Event reactions"],
       "correct": 0,
       "explanation": "NIP-05 lets you map a human-readable identifier like alice@example.com to your Nostr public key via a JSON file on your domain. Useful for discoverability."
+    },
+    {
+      "question": "NIP-10 defines:",
+      "options": ["Encrypted DMs", "Thread references with root, reply, and mention markers", "Relay lists", "Bech32 encoding"],
+      "correct": 1,
+      "explanation": "NIP-10 specifies how to use 'e' tags with markers (root, reply, mention) to build threaded conversations and properly reference the correct event in a reply chain."
     }
   ]
 }

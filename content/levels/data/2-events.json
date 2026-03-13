@@ -21,6 +21,18 @@
       "options": ["The relay", "The author using their private key", "Anyone can add it"],
       "correct": 1,
       "explanation": "The author signs the event with their private key. The signature proves the event wasn't tampered with and that it came from the key owner. Relays cannot forge signatures."
+    },
+    {
+      "question": "How is a Nostr event's 'id' computed?",
+      "options": ["Random UUID", "SHA-256 hash of [0, pubkey, created_at, kind, tags, content]", "Incremental counter from the relay", "Hash of content only"],
+      "correct": 1,
+      "explanation": "The id is the SHA-256 hash of the canonical JSON array. Same content produces the same id—it's deterministic and self-certifying."
+    },
+    {
+      "question": "Events in the kind range 20000–29999 are:",
+      "options": ["Replaceable (only latest kept)", "Ephemeral (not stored by relays)", "Parameterized (use a 'd' tag)", "Regular stored events"],
+      "correct": 1,
+      "explanation": "Ephemeral events are broadcast to connected clients but not persisted. Relays deliver them in real time and discard them—useful for presence, typing indicators, etc."
     }
   ]
 }

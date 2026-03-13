@@ -21,6 +21,12 @@
       "options": ["No, only one", "Yes, you connect to many relays", "Only with a paid subscription"],
       "correct": 1,
       "explanation": "You typically connect to several relays for redundancy. If one goes down or censors you, others still have your data. Relays are interchangeable infrastructure."
+    },
+    {
+      "question": "What does NIP-42 (relay authentication) enable?",
+      "options": ["Relays to forge user signatures", "Paid relays and private relays via challenge-response auth", "Automatic relay discovery", "End-to-end encryption between relays"],
+      "correct": 1,
+      "explanation": "NIP-42 lets relays authenticate clients with a challenge. The client signs a kind 22242 event; once verified, the relay grants access. Used for paid relays, rate limiting, and private relay lists."
     }
   ]
 }

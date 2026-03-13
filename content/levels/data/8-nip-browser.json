@@ -27,6 +27,12 @@
       "options": ["NIP-46", "NIP-21", "NIP-57", "NIP-65"],
       "correct": 0,
       "explanation": "NIP-46 is Nostr Remote Signing."
+    },
+    {
+      "question": "With NIP-46 (Nostr Connect), where does the private key live?",
+      "options": ["On the website the user visits", "In a separate signer app or extension (e.g., phone wallet)", "On the relay", "In a centralized server"],
+      "correct": 1,
+      "explanation": "NIP-46 keeps the key in a signer (phone app, desktop app, or extension). The client app sends signing requests over Nostr DMs; the signer approves and returns the signed event."
     }
   ]
 }

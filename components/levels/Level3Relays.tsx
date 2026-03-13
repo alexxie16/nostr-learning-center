@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { TaskCard } from "../shared/TaskCard";
+import { ExerciseCard, type ExerciseItem } from "../shared/ExerciseCard";
 import { QuizCard, type QuizResultItem } from "../shared/QuizCard";
 import { LevelCompleteCard } from "../shared/LevelCompleteCard";
 import { useNostr } from "../NostrProvider";
@@ -9,18 +10,41 @@ import { fetchEvents, DEFAULT_RELAYS } from "@/lib/nostr";
 import { QUIZZES } from "@/content/levels";
 import type { Event } from "nostr-tools";
 
+const NOTE_TO_PUBLISH = {
+  kind: 1,
+  tags: [["t", "nostrlearn"]],
+  content: "Publishing to Nostr relays! Working on Level 3 at Nostr Learning Center 📡 #nostrlearn",
+};
+
+const EXERCISES: ExerciseItem[] = [
+  {
+    question: "Can a relay forge or modify your signed events?",
+    options: ["Yes, relays control everything", "No, events are cryptographically signed", "Only if you allow it"],
+    correct: 1,
+    explanation: "Events are signed. Any modification would break the signature. Relays can censor but cannot alter valid events.",
+  },
+  {
+    question: "Can you use multiple relays at once?",
+    options: ["No, only one", "Yes, you connect to many relays", "Only with a paid subscription"],
+    correct: 1,
+    explanation: "You typically connect to several relays for redundancy. If one goes down or censors you, others still have your data.",
+  },
+];
+
 interface Level3RelaysProps {
   onComplete: (quizScore: number) => void;
 }
 
 export function Level3Relays({ onComplete }: Level3RelaysProps) {
-  const [step, setStep] = useState<"connect" | "fetch" | "publish" | "quiz" | "done">("connect");
+  const [step, setStep] = useState<"connect" | "fetch" | "publish" | "ex1" | "ex2" | "quiz" | "done">("connect");
   const [events, setEvents] = useState<Event[]>([]);
   const [published, setPublished] = useState(false);
   const [loading, setLoading] = useState(false);
   const [quizScore, setQuizScore] = useState(0);
   const [quizResults, setQuizResults] = useState<QuizResultItem[]>([]);
-  const { signEvent, publish } = useNostr();
+  const [publishError, setPublishError] = useState<string | null>(null);
+  const [publishing, setPublishing] = useState(false);
+  const { signEvent, publish, pubkey } = useNostr();
 
   const handleFetch = async () => {
     setStep("fetch");
@@ -35,18 +59,25 @@ export function Level3Relays({ onComplete }: Level3RelaysProps) {
   };
 
   const handlePublish = async () => {
+    setPublishError(null);
+    if (!pubkey) {
+      setPublishError("You need to sign in first. Use the Sign in button in the header.");
+      return;
+    }
+    setPublishing(true);
     try {
       const template = {
-        kind: 1,
+        ...NOTE_TO_PUBLISH,
         created_at: Math.floor(Date.now() / 1000),
-        tags: [["t", "nostrlearn"], ["t", "nostr"]],
-        content: "Published to Nostr relays! Level 3 complete at Nostr Learning Center 📡 #nostrlearn #nostr",
       };
       const event = await signEvent(template);
       await publish(event);
       setPublished(true);
     } catch (err) {
-      console.error(err);
+      const msg = err instanceof Error ? err.message : "Publish failed. Try again.";
+      setPublishError(msg);
+    } finally {
+      setPublishing(false);
     }
   };
 
@@ -116,28 +147,59 @@ export function Level3Relays({ onComplete }: Level3RelaysProps) {
           completed={published}
         >
           {!published ? (
-            <button
-              onClick={handlePublish}
-              className="rounded-lg bg-amber-500 px-4 py-2 text-sm font-medium text-zinc-900 hover:bg-amber-400"
-            >
-              Publish Note
-            </button>
+            <div className="space-y-3">
+              <p className="text-xs text-zinc-500">Note you will publish (kind 1):</p>
+              <pre className="rounded bg-zinc-800 p-4 text-xs text-zinc-300 overflow-x-auto">
+                {JSON.stringify(
+                  { ...NOTE_TO_PUBLISH, created_at: "<set at publish>" },
+                  null,
+                  2
+                )}
+              </pre>
+              {!pubkey && (
+                <p className="text-sm text-amber-400">
+                  Sign in with the button in the header first (or generate demo keys).
+                </p>
+              )}
+              {publishError && (
+                <p className="text-sm text-red-400">{publishError}</p>
+              )}
+              <button
+                onClick={handlePublish}
+                disabled={!pubkey || publishing}
+                className="rounded-lg bg-amber-500 px-4 py-2 text-sm font-medium text-zinc-900 hover:bg-amber-400 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {publishing ? "Publishing…" : "Publish Note"}
+              </button>
+            </div>
           ) : (
             <div>
               <p className="text-green-400 text-sm mb-2">Published successfully!</p>
               <button
-                onClick={() => setStep("quiz")}
+                onClick={() => setStep("ex1")}
                 className="rounded-lg bg-amber-500 px-4 py-2 text-sm font-medium text-zinc-900 hover:bg-amber-400"
               >
-                Continue to Quiz
+                Continue
               </button>
             </div>
           )}
         </TaskCard>
       )}
 
+      {step === "ex1" && (
+        <ExerciseCard exercise={EXERCISES[0]!} onCorrect={() => setStep("ex2")} />
+      )}
+
+      {step === "ex2" && (
+        <ExerciseCard exercise={EXERCISES[1]!} onCorrect={() => setStep("quiz")} />
+      )}
+
       {step === "quiz" && (
-        <QuizCard questions={QUIZZES[3]} onComplete={handleQuizComplete} />
+        <QuizCard
+          questions={QUIZZES[3]}
+          onComplete={handleQuizComplete}
+          requireAllCorrect
+        />
       )}
 
       {step === "done" && (
